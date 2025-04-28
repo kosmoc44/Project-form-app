@@ -1,6 +1,8 @@
 import Image from "next/image"
 import hero from '../../public/hero.svg'
 import { Button } from "../../components/ui/button"
+import Footer from './Footer.jsx'
+import { SignInButton } from "@clerk/nextjs"
 
 
 function Hero() {
@@ -22,9 +24,11 @@ function Hero() {
                     </p>
 
                     <div className="mt-4 flex gap-4 sm:mt-6">
-                        <Button className="border-indigo-600 bg-indigo-600    hover:bg-indigo-700">
-                            Get started
-                        </Button>
+                        <SignInButton mode="modal" fallbackRedirectUrl="/dashboard">
+                            <Button className="border-indigo-600 bg-indigo-600    hover:bg-white">
+                                Get started
+                            </Button>
+                        </SignInButton>
 
                         <Button variant={"outline"}>
                             Learn More
@@ -33,6 +37,7 @@ function Hero() {
                 </div>
                 <Image src={hero} alt="herImg" />
             </div>
+            <Footer />
         </section >
     )
 }
