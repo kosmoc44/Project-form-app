@@ -1,16 +1,15 @@
 "use client"
 
 import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from "@clerk/nextjs"
-import Image from "next/image"
-import Link from "next/link"
 import { Button } from "../../components/ui/button"
 import { useState } from "react"
 import { BriefcaseIcon, FormInputIcon, HomeIcon, InfoIcon, MailIcon, MenuIcon, XIcon } from "lucide-react"
+import ModeToggle from './ModeToggle.jsx'
 
 function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     return (
-        <header className=" w-full h-[80px] flex justify-between items-center px-4 md:px-6 bg-white backdrop-blur-md shadow-md sticky top-0 z-50">
+        <header className=" w-full h-[80px] flex justify-between items-center px-4 md:px-6 backdrop-blur-md shadow-md sticky top-0 z-50">
             <div className="font-bold text-xl md:text-2xl flex items-center">
                 <FormInputIcon className=" w-6 h-6 mr-2" />
                 Project Forms
@@ -23,7 +22,7 @@ function Header() {
                 {isMenuOpen ? <XIcon /> : <MenuIcon />}
             </button>
             <nav
-                className={`${isMenuOpen ? "block bg-white shadow-md" : "hidden"}
+                className={`${isMenuOpen ? "block shadow-md bg-accent" : "hidden"}
         absolute top-[80px] left-0 w-full z-50 md:static md:flex md:items-center md:gap-6 md:w-auto
         `}
             >
@@ -48,9 +47,12 @@ function Header() {
                             <MailIcon /> Contact
                         </Button>
                     </li>
+                    <li className="w-full text-center">
+                        <ModeToggle />
+                    </li>
                     <li>
                         <SignedOut>
-                            <Button variant="default" asChild>
+                            <Button variant="outline" asChild>
                                 <SignInButton mode="modal" fallbackRedirectUrl="/dashboard" />
                             </Button>
                         </SignedOut>

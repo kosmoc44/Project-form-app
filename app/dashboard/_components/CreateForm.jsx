@@ -217,9 +217,9 @@ function CreateForm() {
                                         options: e.target.value === "text" ? [] : currentQuestion.options
                                     })}
                                 >
-                                    <option value="text">Text Answer</option>
-                                    <option value="radio">Single Choice</option>
-                                    <option value="checkbox">Multiple Choice</option>
+                                    <option className="dark:text-black" value="text">Text Answer</option>
+                                    <option className="dark:text-black" value="radio">Single Choice</option>
+                                    <option className="dark:text-black" value="checkbox">Multiple Choice</option>
                                 </select>
                             </div>
 

@@ -48,7 +48,7 @@ export default function ResponsesPage() {
                         allResponses.push({
                             formId: formDoc.id,
                             formTitle: formData.title,
-                            responseIndex: index, // Добавляем индекс ответа
+                            responseIndex: index,
                             responseId: `${formDoc.id}-${index}`,
                             answers: response,
                             createdAt: new Date().toLocaleString()
@@ -112,15 +112,17 @@ export default function ResponsesPage() {
 
     return (
         <div className="container mx-auto px-4 py-8">
-            <div className="flex items-center justify-between mb-8">
-                <div className="flex items-center space-x-4">
-                    <MessageSquare className="h-8 w-8 text-primary" />
-                    <h1 className="text-3xl font-bold">Responses</h1>
-                    <Badge variant="secondary" className="text-sm">
-                        {responses.length} total
-                    </Badge>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+                <div className="flex items-center space-x-3">
+                    <MessageSquare className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
+                    <div className="flex  items-center gap-1">
+                        <h1 className="text-2xl sm:text-3xl font-bold">Responses</h1>
+                        <Badge variant="secondary" className="text-xs sm:text-sm mt-1">
+                            {responses.length} total
+                        </Badge>
+                    </div>
                 </div>
-                <Button variant="outline" onClick={handleCopyToClipboard}>
+                <Button variant="outline" size="sm" className="w-full sm:w-auto" onClick={handleCopyToClipboard}>
                     <Copy className="mr-2 h-4 w-4" />
                     Copy JSON
                 </Button>
@@ -130,24 +132,26 @@ export default function ResponsesPage() {
                 <div className="flex flex-col items-center justify-center py-16 space-y-4 text-center">
                     <FileText className="h-12 w-12 text-muted-foreground" />
                     <h3 className="text-xl font-medium">No responses yet</h3>
-                    <p className="text-muted-foreground">
+                    <p className="text-muted-foreground max-w-md px-4">
                         Responses will appear here once users start submitting your forms
                     </p>
                 </div>
             ) : (
-                <div className="grid gap-6">
+                <div className="grid gap-4 sm:gap-6">
                     {responses.map((response) => (
                         <Card key={response.responseId} className="hover:shadow-md transition-shadow">
-                            <CardHeader>
-                                <div className="flex justify-between items-start">
-                                    <div>
-                                        <CardTitle>{response.formTitle}</CardTitle>
-                                        <CardDescription className="mt-1">
-                                            Response ID: {response.responseId}
+                            <CardHeader className="p-4 sm:p-6">
+                                <div className="flex flex-col sm:flex-row justify-between gap-3 sm:items-start">
+                                    <div className="space-y-1">
+                                        <CardTitle className="text-lg sm:text-xl line-clamp-2">
+                                            {response.formTitle}
+                                        </CardTitle>
+                                        <CardDescription className="text-xs sm:text-sm">
+                                            ID: {response.responseId}
                                         </CardDescription>
                                     </div>
-                                    <div className="flex items-center gap-2">
-                                        <Badge variant="outline" className="text-xs">
+                                    <div className="flex items-center justify-between sm:justify-end gap-2">
+                                        <Badge variant="outline" className="text-xs whitespace-nowrap">
                                             {response.createdAt}
                                         </Badge>
 
@@ -156,17 +160,17 @@ export default function ResponsesPage() {
                                                 <Button
                                                     variant="ghost"
                                                     size="icon"
-                                                    className="text-red-500 hover:text-red-700"
+                                                    className="h-8 w-8 text-red-500 hover:text-red-700"
                                                     disabled={deletingId === response.responseId}
                                                 >
                                                     {deletingId === response.responseId ? (
-                                                        <div className="animate-spin h-4 w-4 border-t-2 border-b-2 border-red-500 rounded-full"></div>
+                                                        <div className="animate-spin h-3 w-3 border-t-2 border-b-2 border-red-500 rounded-full"></div>
                                                     ) : (
                                                         <Trash2 className="h-4 w-4" />
                                                     )}
                                                 </Button>
                                             </AlertDialogTrigger>
-                                            <AlertDialogContent>
+                                            <AlertDialogContent className="max-w-[90%] sm:max-w-md">
                                                 <AlertDialogHeader>
                                                     <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                                                     <AlertDialogDescription>
@@ -174,7 +178,7 @@ export default function ResponsesPage() {
                                                     </AlertDialogDescription>
                                                 </AlertDialogHeader>
                                                 <AlertDialogFooter>
-                                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                                    <AlertDialogCancel className="mt-0">Cancel</AlertDialogCancel>
                                                     <AlertDialogAction
                                                         className="bg-red-600 hover:bg-red-700"
                                                         onClick={() => handleDeleteResponse(response.formId, response.responseIndex)}
@@ -187,23 +191,25 @@ export default function ResponsesPage() {
                                     </div>
                                 </div>
                             </CardHeader>
-                            <CardContent>
-                                <div className="space-y-4">
+                            <CardContent className="p-4 sm:p-6 pt-0">
+                                <div className="space-y-3">
                                     {Object.entries(response.answers).map(([questionIndex, answer]) => (
-                                        <div key={questionIndex} className="border-l-4 border-primary pl-4 py-2">
-                                            <h4 className="font-medium text-sm text-muted-foreground">
-                                                Question {parseInt(questionIndex) + 1}
+                                        <div key={questionIndex} className="border-l-2 sm:border-l-4 border-primary pl-3 py-1">
+                                            <h4 className="font-medium text-xs sm:text-sm text-muted-foreground">
+                                                Q{parseInt(questionIndex) + 1}
                                             </h4>
                                             {Array.isArray(answer) ? (
-                                                <div className="mt-1 flex flex-wrap gap-2">
+                                                <div className="mt-1 flex flex-wrap gap-1 sm:gap-2">
                                                     {answer.map((item, i) => (
-                                                        <Badge key={i} variant="secondary">
+                                                        <Badge key={i} variant="secondary" className="text-xs">
                                                             {item}
                                                         </Badge>
                                                     ))}
                                                 </div>
                                             ) : (
-                                                <p className="mt-1 text-foreground">{answer}</p>
+                                                <p className="mt-1 text-sm sm:text-base text-foreground break-words">
+                                                    {answer}
+                                                </p>
                                             )}
                                         </div>
                                     ))}

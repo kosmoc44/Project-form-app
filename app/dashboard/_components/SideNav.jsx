@@ -1,5 +1,4 @@
-import { ChartLine, CircleFadingArrowUp, Library, MessageSquareMore, ChevronRight, ChevronLeft, ArrowLeft } from "lucide-react"
-import { Button } from "../../../components/ui/button.jsx"
+import { ChartLine, CircleFadingArrowUp, Library, MessageSquareMore, ArrowLeft } from "lucide-react"
 import { usePathname } from "next/navigation.js"
 import Link from "next/link.js"
 import { useState } from "react"
@@ -21,9 +20,9 @@ function SideNav({ isOpen }) {
         },
         {
             id: 3,
-            name: "Analytics",
+            name: "Edit",
             icon: <ChartLine size={20} />,
-            path: '/dashboard/analytics'
+            path: '/dashboard/edit'
         },
         {
             id: 4,
@@ -36,12 +35,12 @@ function SideNav({ isOpen }) {
 
     return (
         <>
-            <div className="w-64 h-screen fixed md:static bg-white border-r shadow-sm">
+            <div className="w-64 h-screen fixed md:static border-r shadow-sm">
                 {menuList.map((item) => (
                     <div key={item.id} className="p-3 border-b">
                         <Link href={item.path}>
-                            <div className={`flex items-center gap-2 hover:bg-primary hover:text-white rounded-lg p-3 cursor-pointer
-                        ${path == item.path && 'bg-primary text-white'}`}>
+                            <div className={`flex items-center gap-2 hover:bg-primary/50 hover:text-white rounded-lg p-3 cursor-pointer
+                        ${path == item.path && 'bg-primary/50 text-white'}`}>
                                 {item.icon}
                                 {item.name}
                             </div>
