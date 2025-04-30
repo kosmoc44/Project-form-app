@@ -4,7 +4,7 @@ import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from "@clerk/n
 import { Button } from "../../components/ui/button"
 import { useState } from "react"
 import { BriefcaseIcon, FormInputIcon, HomeIcon, InfoIcon, MailIcon, MenuIcon, XIcon } from "lucide-react"
-import ModeToggle from './ModeToggle.jsx'
+import ModeToggle from './Theme/ModeToggle'
 
 function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)

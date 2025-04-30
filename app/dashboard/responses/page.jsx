@@ -12,7 +12,6 @@ import {
 } from '../../../components/ui/card'
 import {
     AlertDialog,
-    AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
@@ -179,12 +178,12 @@ export default function ResponsesPage() {
                                                 </AlertDialogHeader>
                                                 <AlertDialogFooter>
                                                     <AlertDialogCancel className="mt-0">Cancel</AlertDialogCancel>
-                                                    <AlertDialogAction
-                                                        className="bg-red-600 hover:bg-red-700"
+                                                    <Button
+                                                        variant={"destructive"}
                                                         onClick={() => handleDeleteResponse(response.formId, response.responseIndex)}
                                                     >
                                                         Delete
-                                                    </AlertDialogAction>
+                                                    </Button>
                                                 </AlertDialogFooter>
                                             </AlertDialogContent>
                                         </AlertDialog>

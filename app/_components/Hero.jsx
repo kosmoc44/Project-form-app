@@ -9,7 +9,7 @@ function Hero() {
     return (
         <section className=" lg:grid  lg:place-content-center">
             <div
-                className="mx-auto w-screen max-w-screen-xl px-4 sm:px-6 sm:py-24 md:grid md:grid-cols-2 md:items-center md:gap-4 lg:px-8 lg:py-32"
+                className="flex flex-col gap-10 mx-auto w-screen max-w-screen-xl px-4 py-26 sm:px-6 sm:py-24 md:grid md:grid-cols-2 md:items-center md:gap-4 lg:px-8"
             >
                 <div className="max-w-prose text-left">
                     <h1 className="text-4xl font-bold sm:text-5xl">
@@ -35,7 +35,9 @@ function Hero() {
                         </Button>
                     </div>
                 </div>
-                <Image src={hero} alt="herImg" />
+                <div>
+                    <Image src={hero} alt="herImg" />
+                </div>
             </div>
             <Footer />
         </section >
