@@ -1,4 +1,4 @@
-import { ChartLine, CircleFadingArrowUp, Library, MessageSquareMore, ArrowLeft } from "lucide-react"
+import { CircleFadingArrowUp, Library, MessageSquareMore, ArrowLeft, Link2 } from "lucide-react"
 import { usePathname } from "next/navigation.js"
 import Link from "next/link.js"
 import { useState } from "react"
@@ -14,15 +14,15 @@ function SideNav({ isOpen }) {
         },
         {
             id: 2,
-            name: "Responses",
-            icon: <MessageSquareMore size={20} />,
-            path: '/dashboard/responses'
+            name: "Links",
+            icon: <Link2 size={20} />,
+            path: '/dashboard/link'
         },
         {
             id: 3,
-            name: "Edit",
-            icon: <ChartLine size={20} />,
-            path: '/dashboard/edit'
+            name: "Responses",
+            icon: <MessageSquareMore size={20} />,
+            path: '/dashboard/responses'
         },
         {
             id: 4,
@@ -35,7 +35,7 @@ function SideNav({ isOpen }) {
 
     return (
         <>
-            <div className="w-64 h-screen fixed md:static border-r shadow-sm">
+            <div className="w-64 h-svh md:static border-r shadow-sm flex flex-col">
                 {menuList.map((item) => (
                     <div key={item.id} className="p-3 border-b">
                         <Link href={item.path}>

@@ -16,7 +16,6 @@ import {
 } from "../../components/ui/dropdown-menu"
 import {
     AlertDialog,
-    AlertDialogAction,
     AlertDialogCancel,
     AlertDialogContent,
     AlertDialogDescription,
@@ -27,6 +26,7 @@ import {
 import { toast } from "sonner"
 import { useState } from "react"
 import { Badge } from "../../components/ui/badge"
+import { SearchBar } from "./_components/SearchBar"
 
 function Dashboard() {
     const formsCollection = collection(db, "forms")
@@ -35,6 +35,12 @@ function Dashboard() {
     })
     const [selectedFormId, setSelectedFormId] = useState(null)
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+    const [search, setSearch] = useState("")
+
+    const filteredForms = forms?.filter(form =>
+        form.title.toLowerCase().includes(search.toLowerCase()) ||
+        form.description?.toLowerCase().includes(search.toLowerCase())
+    ) || []
 
     const handleDeleteForm = async () => {
         if (!selectedFormId) return
@@ -91,16 +97,25 @@ function Dashboard() {
 
             <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
                 <h2 className="font-bold text-2xl sm:text-3xl">My Forms</h2>
-                <CreateForm />
+                <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                    <SearchBar
+                        value={search}
+                        onChange={setSearch}
+                        placeholder="Search forms..."
+                    />
+                    <CreateForm />
+                </div>
             </div>
 
-            {forms?.length === 0 ? (
+            {filteredForms.length === 0 ? (
                 <div className="text-center py-12 border rounded-lg">
-                    <p className="text-gray-500">No forms created yet</p>
+                    <p className="text-gray-500">
+                        {search ? "No matching forms found" : "No forms created yet"}
+                    </p>
                 </div>
             ) : (
                 <div className="grid gap-4 sm:gap-6">
-                    {forms?.map(form => (
+                    {filteredForms.map(form => (
                         <div key={form.id} className="border p-4 sm:p-6 rounded-lg hover:shadow-md group">
                             <div className="flex justify-between items-start mb-4">
                                 <div>
@@ -146,11 +161,7 @@ function Dashboard() {
                                     {form.questions.length} questions
                                 </span>
                                 <Badge>
-                                    Created: {form.createdAt?.toDate().toLocaleDateString('en-US', {
-                                        year: 'numeric',
-                                        month: 'short',
-                                        day: 'numeric'
-                                    })}
+                                    Created: {form.createdAt?.toDate().toLocaleDateString()}
                                 </Badge>
                             </div>
                         </div>

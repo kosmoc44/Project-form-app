@@ -24,6 +24,7 @@ import { Badge } from '../../../components/ui/badge'
 import { Button } from '../../../components/ui/button'
 import { MessageSquare, ClipboardList, FileText, Trash2, Copy } from 'lucide-react'
 import { toast } from "sonner"
+import { SearchBar } from "../_components/SearchBar"
 
 export default function ResponsesPage() {
     const [responses, setResponses] = useState([])
@@ -120,6 +121,8 @@ export default function ResponsesPage() {
                             {responses.length} total
                         </Badge>
                     </div>
+                </div>
+                <div>
                 </div>
                 <Button variant="outline" size="sm" className="w-full sm:w-auto" onClick={handleCopyToClipboard}>
                     <Copy className="mr-2 h-4 w-4" />

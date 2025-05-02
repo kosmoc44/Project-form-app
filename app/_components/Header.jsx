@@ -50,6 +50,9 @@ function Header() {
                     <li className="w-full text-center">
                         <ModeToggle />
                     </li>
+                    <li className="w-full text-center">
+                        
+                    </li>
                     <li>
                         <SignedOut>
                             <Button variant="outline" asChild>
