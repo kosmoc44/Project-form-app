@@ -17,17 +17,20 @@ import {
 import { toast } from "sonner"
 import { Badge } from "../../../components/ui/badge"
 import { Input } from "../../../components/ui/input"
+import { useSearch } from "../../hooks/useSearch"
+import { SearchBar } from "../_components/SearchBar"
 
 function LinkPage() {
   const formsCollection = collection(db, "forms")
   const { data: forms, status } = useFirestoreCollectionData(formsCollection, {
     idField: "id"
   })
+  const { search, setSearch, filteredItems: filteredForms } = useSearch(forms || [])
 
   const copyToClipboard = (formId) => {
-    const link = `${window.location.origin}/dashboard/forms/${formId}`
-    navigator.clipboard.writeText(link)
-    toast.success("Link copied to clipboard")
+    const publicLink = `${window.location.origin}/forms/${formId}`
+    navigator.clipboard.writeText(publicLink)
+    toast.success("Public link copied to clipboard")
   }
 
   if (status === 'loading') {
@@ -38,7 +41,7 @@ function LinkPage() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {[...Array(3)].map((_, i) => (
-            <Skeleton key={i} className="h-40 rounded-lg" />
+            <Skeleton key={i} className="h-65 rounded-lg" />
           ))}
         </div>
       </div>
@@ -48,19 +51,28 @@ function LinkPage() {
   return (
     <div className="p-4 sm:p-10">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
-        <div>
+        <div className="flex items-center gap-3">
           <h2 className="font-bold text-2xl sm:text-3xl mb-2">Form Links</h2>
           <p className="text-muted-foreground">Manage and track your form links</p>
         </div>
+        <div>
+          <SearchBar
+            value={search}
+            onChange={setSearch}
+            placeholder="Search Links..."
+          />
+        </div>
       </div>
 
-      {forms?.length === 0 ? (
+      {filteredForms?.length === 0 ? (
         <div className="text-center py-12 border rounded-lg">
-          <p className="text-gray-500">No forms available</p>
+          <p className="text-gray-500">
+            {search ? "No matching forms found" : "No links created yet"}
+          </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {forms?.map(form => (
+          {filteredForms?.map(form => (
             <Card key={form.id} className="hover:shadow-lg transition-shadow">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -72,7 +84,7 @@ function LinkPage() {
               <CardContent className="space-y-4">
                 <div className="flex items-center gap-2">
                   <Input
-                    value={`${window.location.origin}/dashboard/forms/${form.id}`}
+                    value={`${window.location.origin}/forms/${form.id}`}
                     readOnly
                     className="truncate"
                   />

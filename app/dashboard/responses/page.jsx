@@ -22,14 +22,16 @@ import {
 } from '../../../components/ui/alert-dialog'
 import { Badge } from '../../../components/ui/badge'
 import { Button } from '../../../components/ui/button'
-import { MessageSquare, ClipboardList, FileText, Trash2, Copy } from 'lucide-react'
+import { Trash2, Copy } from 'lucide-react'
 import { toast } from "sonner"
 import { SearchBar } from "../_components/SearchBar"
+import { useSearch } from "../../hooks/useSearchResponses"
 
 export default function ResponsesPage() {
     const [responses, setResponses] = useState([])
     const [loading, setLoading] = useState(true)
     const [deletingId, setDeletingId] = useState(null)
+    const { search, setSearch, filteredItems: filteredResponses } = useSearch(responses || [])
 
     useEffect(() => {
         fetchResponses()
@@ -48,6 +50,7 @@ export default function ResponsesPage() {
                         allResponses.push({
                             formId: formDoc.id,
                             formTitle: formData.title,
+                            formDescription: formData.description,
                             responseIndex: index,
                             responseId: `${formDoc.id}-${index}`,
                             answers: response,
@@ -114,7 +117,6 @@ export default function ResponsesPage() {
         <div className="container mx-auto px-4 py-8">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
                 <div className="flex items-center space-x-3">
-                    <MessageSquare className="h-6 w-6 sm:h-8 sm:w-8 text-primary" />
                     <div className="flex  items-center gap-1">
                         <h1 className="text-2xl sm:text-3xl font-bold">Responses</h1>
                         <Badge variant="secondary" className="text-xs sm:text-sm mt-1">
@@ -122,25 +124,29 @@ export default function ResponsesPage() {
                         </Badge>
                     </div>
                 </div>
-                <div>
+                <div className="flex items-center gap-3">
+                    <SearchBar
+                        value={search}
+                        onChange={setSearch}
+                        placeholder="Search Responses..."
+                    />
+                    <Button variant="outline" size="sm" className="w-full sm:w-auto" onClick={handleCopyToClipboard}>
+                        <Copy className="mr-2 h-4 w-4" />
+                        Copy JSON
+                    </Button>
                 </div>
-                <Button variant="outline" size="sm" className="w-full sm:w-auto" onClick={handleCopyToClipboard}>
-                    <Copy className="mr-2 h-4 w-4" />
-                    Copy JSON
-                </Button>
             </div>
 
-            {responses.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-16 space-y-4 text-center">
-                    <FileText className="h-12 w-12 text-muted-foreground" />
-                    <h3 className="text-xl font-medium">No responses yet</h3>
+            {filteredResponses?.length === 0 ? (
+                <div className="flex flex-col items-center justify-center py-16 space-y-4 text-center border rounded-lg">
+                    <h3 className="text-xl font-medium">{search ? 'No matching responses found' : 'No responses yet created'}</h3>
                     <p className="text-muted-foreground max-w-md px-4">
-                        Responses will appear here once users start submitting your forms
+                        {search ? "" : "Responses will appear here once users start submitting your forms"}
                     </p>
                 </div>
             ) : (
                 <div className="grid gap-4 sm:gap-6">
-                    {responses.map((response) => (
+                    {filteredResponses?.map((response) => (
                         <Card key={response.responseId} className="hover:shadow-md transition-shadow">
                             <CardHeader className="p-4 sm:p-6">
                                 <div className="flex flex-col sm:flex-row justify-between gap-3 sm:items-start">
@@ -148,6 +154,9 @@ export default function ResponsesPage() {
                                         <CardTitle className="text-lg sm:text-xl line-clamp-2">
                                             {response.formTitle}
                                         </CardTitle>
+                                        <CardDescription className="text-sm line-clamp-3">
+                                            {response.formDescription}
+                                        </CardDescription>
                                         <CardDescription className="text-xs sm:text-sm">
                                             ID: {response.responseId}
                                         </CardDescription>

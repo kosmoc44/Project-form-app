@@ -5,6 +5,9 @@ import { Search, X } from "lucide-react"
 import { Button } from "../../../components/ui/button"
 
 export const SearchBar = ({ value, onChange, placeholder }) => {
+    const handleChange = (e) => {
+        onChange?.(e.target.value)
+    }
     return (
         <div className="relative w-full">
             <Input
@@ -20,7 +23,7 @@ export const SearchBar = ({ value, onChange, placeholder }) => {
                     variant="ghost"
                     size="icon"
                     className="absolute right-2 top-2 h-6 w-6"
-                    onClick={() => onChange('')}
+                    onClick={() => onChange?.('')}
                 >
                     <X className="h-4 w-4" />
                 </Button>

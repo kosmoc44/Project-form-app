@@ -24,7 +24,7 @@ function CreateForm() {
     const [questions, setQuestions] = useState([])
     const [currentQuestion, setCurrentQuestion] = useState({
         text: "",
-        type: "text", // "text", "radio", "checkbox"
+        type: "text",
         options: []
     })
     const [newOption, setNewOption] = useState("")
@@ -66,23 +66,18 @@ function CreateForm() {
         })
     }
 
-    const moveQuestionUp = (index) => {
-        if (index === 0) return
-        const updatedQuestions = [...questions]
-        const temp = updatedQuestions[index]
-        updatedQuestions[index] = updatedQuestions[index - 1]
-        updatedQuestions[index - 1] = temp
-        setQuestions(updatedQuestions)
-    }
+    const moveQuestion = (index, direction) => {
+        const newIndex = direction === 'up' ? index - 1 : index + 1;
 
-    const moveQuestionDown = (index) => {
-        if (index === questions.length - 1) return
-        const updatedQuestions = [...questions]
-        const temp = updatedQuestions[index]
-        updatedQuestions[index] = updatedQuestions[index + 1]
-        updatedQuestions[index + 1] = temp
-        setQuestions(updatedQuestions)
-    }
+        if (newIndex < 0 || newIndex >= questions.length) return;
+
+        setQuestions(questions => {
+            const updatedQuestions = [...questions];
+            [updatedQuestions[index], updatedQuestions[newIndex]] =
+                [updatedQuestions[newIndex], updatedQuestions[index]];
+            return updatedQuestions;
+        });
+    };
 
     const handleSubmit = async () => {
         if (title.trim() === "" || questions.length === 0) {
@@ -168,7 +163,7 @@ function CreateForm() {
                                         <Button
                                             variant="ghost"
                                             size="icon"
-                                            onClick={() => moveQuestionUp(index)}
+                                            onClick={() => moveQuestion(index, "up")}
                                             disabled={index === 0}
                                         >
                                             <ChevronUp className="h-4 w-4" />
@@ -176,7 +171,7 @@ function CreateForm() {
                                         <Button
                                             variant="ghost"
                                             size="icon"
-                                            onClick={() => moveQuestionDown(index)}
+                                            onClick={() => moveQuestion(index, "down")}
                                             disabled={index === questions.length - 1}
                                         >
                                             <ChevronDown className="h-4 w-4" />
@@ -269,7 +264,6 @@ function CreateForm() {
                         variant={"outline"}
                         className="w-full mt-4"
                         onClick={handleSubmit}
-                        disabled={title.trim() === "" || questions.length === 0}
                     >
                         Create Form
                     </Button>

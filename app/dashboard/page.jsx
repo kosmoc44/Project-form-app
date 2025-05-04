@@ -27,6 +27,7 @@ import { toast } from "sonner"
 import { useState } from "react"
 import { Badge } from "../../components/ui/badge"
 import { SearchBar } from "./_components/SearchBar"
+import { useSearch } from '../hooks/useSearch'
 
 function Dashboard() {
     const formsCollection = collection(db, "forms")
@@ -35,12 +36,7 @@ function Dashboard() {
     })
     const [selectedFormId, setSelectedFormId] = useState(null)
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
-    const [search, setSearch] = useState("")
-
-    const filteredForms = forms?.filter(form =>
-        form.title.toLowerCase().includes(search.toLowerCase()) ||
-        form.description?.toLowerCase().includes(search.toLowerCase())
-    ) || []
+    const { search, setSearch, filteredItems: filteredForms } = useSearch(forms || [])
 
     const handleDeleteForm = async () => {
         if (!selectedFormId) return
@@ -60,11 +56,14 @@ function Dashboard() {
     if (status === 'loading') {
         return (
             <div className="p-4 sm:p-10">
-                <div className="flex items-center justify-between mb-8">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
                     <Skeleton className="h-8 w-48" />
-                    <Skeleton className="h-10 w-32" />
+                    <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                        <Skeleton className="h-10 w-52" />
+                        <Skeleton className="h-10 w-32" />
+                    </div>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid gap-4 sm:gap-6">
                     {[...Array(3)].map((_, i) => (
                         <Skeleton key={i} className="h-40 rounded-lg" />
                     ))}
@@ -96,7 +95,7 @@ function Dashboard() {
             </AlertDialog>
 
             <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
-                <h2 className="font-bold text-2xl sm:text-3xl">My Forms</h2>
+                <h2 className="font-bold text-2xl sm:text-3xl">Forms</h2>
                 <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
                     <SearchBar
                         value={search}
@@ -107,7 +106,7 @@ function Dashboard() {
                 </div>
             </div>
 
-            {filteredForms.length === 0 ? (
+            {(filteredForms?.length === 0) ? (
                 <div className="text-center py-12 border rounded-lg">
                     <p className="text-gray-500">
                         {search ? "No matching forms found" : "No forms created yet"}
@@ -115,7 +114,7 @@ function Dashboard() {
                 </div>
             ) : (
                 <div className="grid gap-4 sm:gap-6">
-                    {filteredForms.map(form => (
+                    {filteredForms?.map(form => (
                         <div key={form.id} className="border p-4 sm:p-6 rounded-lg hover:shadow-md group">
                             <div className="flex justify-between items-start mb-4">
                                 <div>
@@ -157,9 +156,14 @@ function Dashboard() {
                             </div>
 
                             <div className="flex justify-between items-center">
-                                <span className="text-sm text-gray-500">
-                                    {form.questions.length} questions
-                                </span>
+                                <div className="flex items-center flex-col gap-3">
+                                    <Badge variant="secondary">
+                                        {form.questions.length} questions
+                                    </Badge>
+                                    <Badge variant="secondary">
+                                        {form.responses?.length || 0} responses
+                                    </Badge>
+                                </div>
                                 <Badge>
                                     Created: {form.createdAt?.toDate().toLocaleDateString()}
                                 </Badge>

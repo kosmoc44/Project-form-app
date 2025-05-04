@@ -3,10 +3,14 @@ import { SignedIn } from "@clerk/nextjs"
 import React from 'react'
 import SideNav from './_components/SideNav.jsx'
 import MobileSideNavToggle from './_components/MobileSideNavToggle.jsx'
+import Header from "../_components/Header.jsx"
 
 function DashboardLayout({ children }) {
     return (
         <SignedIn>
+            <div>
+                <Header />
+            </div>
             <div className="flex min-h-[100svh]">
                 <div className="hidden md:block h-[100svh] sticky top-0">
                     <SideNav />
