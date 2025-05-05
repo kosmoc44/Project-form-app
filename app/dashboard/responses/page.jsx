@@ -124,7 +124,7 @@ export default function ResponsesPage() {
                         </Badge>
                     </div>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 max-[620px]:flex-col max-[620px]:w-[100%]">
                     <SearchBar
                         value={search}
                         onChange={setSearch}
@@ -145,11 +145,11 @@ export default function ResponsesPage() {
                     </p>
                 </div>
             ) : (
-                <div className="grid gap-4 sm:gap-6">
+                <div className="grid">
                     {filteredResponses?.map((response) => (
                         <Card key={response.responseId} className="hover:shadow-md transition-shadow">
-                            <CardHeader className="p-4 sm:p-6">
-                                <div className="flex flex-col sm:flex-row justify-between gap-3 sm:items-start">
+                            <CardHeader>
+                                <div className="flex flex-col sm:flex-row justify-between sm:items-start">
                                     <div className="space-y-1">
                                         <CardTitle className="text-lg sm:text-xl line-clamp-2">
                                             {response.formTitle}
@@ -162,7 +162,7 @@ export default function ResponsesPage() {
                                         </CardDescription>
                                     </div>
                                     <div className="flex items-center justify-between sm:justify-end gap-2">
-                                        <Badge variant="outline" className="text-xs whitespace-nowrap">
+                                        <Badge>
                                             {response.createdAt}
                                         </Badge>
 

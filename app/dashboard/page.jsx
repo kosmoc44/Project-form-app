@@ -28,6 +28,7 @@ import { useState } from "react"
 import { Badge } from "../../components/ui/badge"
 import { SearchBar } from "./_components/SearchBar"
 import { useSearch } from '../hooks/useSearch'
+import { FormInteractions } from './_components/FormInteractions'
 
 function Dashboard() {
     const formsCollection = collection(db, "forms")
@@ -164,9 +165,12 @@ function Dashboard() {
                                         {form.responses?.length || 0} responses
                                     </Badge>
                                 </div>
-                                <Badge>
-                                    Created: {form.createdAt?.toDate().toLocaleDateString()}
-                                </Badge>
+                                <div>
+                                    <Badge>
+                                        Created: {form.createdAt?.toDate().toLocaleDateString()}
+                                    </Badge>
+                                    <FormInteractions form={form} />
+                                </div>
                             </div>
                         </div>
                     ))}

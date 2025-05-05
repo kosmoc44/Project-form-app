@@ -23,13 +23,7 @@ function SideNav({ isOpen }) {
             name: "Responses",
             icon: <MessageSquareMore size={20} />,
             path: '/dashboard/responses'
-        },
-        {
-            id: 4,
-            name: "Upgrade",
-            icon: <CircleFadingArrowUp size={20} />,
-            path: '/dashboard/upgrade'
-        },
+        }
     ]
     const path = usePathname()
 
