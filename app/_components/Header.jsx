@@ -3,7 +3,7 @@
 import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from "@clerk/nextjs"
 import { Button } from "../../components/ui/button"
 import { useState } from "react"
-import { BriefcaseIcon, FormInputIcon, HomeIcon, InfoIcon, MailIcon, MenuIcon, XIcon } from "lucide-react"
+import { BriefcaseIcon, HomeIcon, InfoIcon, MailIcon, MenuIcon, ShieldCheck, XIcon } from "lucide-react"
 import ModeToggle from './Theme/ModeToggle'
 
 function Header() {
@@ -11,7 +11,7 @@ function Header() {
     return (
         <header className=" w-full h-[80px] flex justify-between items-center px-4 md:px-6 backdrop-blur-md shadow-md sticky top-0 z-50">
             <div className="font-bold text-xl md:text-2xl flex items-center">
-                <FormInputIcon className=" w-6 h-6 mr-2" />
+                <ShieldCheck className=" w-6 h-6 mr-2" />
                 Project Forms
             </div>
 
@@ -51,7 +51,7 @@ function Header() {
                         <ModeToggle />
                     </li>
                     <li className="w-full text-center">
-                        
+
                     </li>
                     <li>
                         <SignedOut>

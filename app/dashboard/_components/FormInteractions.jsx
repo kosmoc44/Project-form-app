@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from 'react'
-import { Textarea } from '../../../components/ui/textarea'
 import { Button } from '../../../components/ui/button'
 import { ThumbsUp, MessageCircle } from "lucide-react"
 import { db } from '../../../lib/firebase/config'

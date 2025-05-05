@@ -1,5 +1,5 @@
 import { SignInButton } from "@clerk/nextjs"
-import { FormInputIcon, MoveRightIcon } from "lucide-react"
+import { FormInputIcon, MoveRightIcon, ShieldCheck } from "lucide-react"
 import React from 'react'
 
 function Footer() {
@@ -224,7 +224,7 @@ function Footer() {
 
                     <div className="mt-16 sm:flex sm:items-center sm:justify-between">
                         <div className="flex justify-center items-center font-bold text-xl md:text-2xl text-indigo-600 sm:justify-start">
-                            <FormInputIcon className=" w-10 h-10 mr-2" />
+                            <ShieldCheck className=" w-6 h-6 mr-2" />
                             Project Forms
                         </div>
 

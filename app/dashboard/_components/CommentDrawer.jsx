@@ -22,9 +22,9 @@ export const CommentDrawer = ({
     currnetUserId
 }) => (
     <Drawer open={open} onOpenChange={onOpenChange}>
-        <DrawerContent className="h-[90vh] max-h-screen">
+        <DrawerContent className="p-2">
             <div className="p-4">
-                <DrawerHeader className="text-left">
+                <DrawerHeader>
                     <div className="flex items-center justify-between">
                         <DrawerTitle>Comments ({comments.length})</DrawerTitle>
                         <Button
@@ -37,8 +37,8 @@ export const CommentDrawer = ({
                     </div>
                 </DrawerHeader>
 
-                <div className="flex flex-col h-full">
-                    <div className="flex-1 overflow-y-auto pr-2 space-y-4 mt-4">
+                <div>
+                    <div>
                         {comments.map((comment, index) => (
                             <CommentItem
                                 key={index}
@@ -49,7 +49,7 @@ export const CommentDrawer = ({
                         ))}
                     </div>
 
-                    <div className="pt-4 border-t mt-4">
+                    <div className="pt-4 border-t mt-4 mb-4">
                         <div className="flex gap-2">
                             <Textarea
                                 value={comment}

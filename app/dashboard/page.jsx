@@ -7,7 +7,7 @@ import { db } from '../../lib/firebase/config'
 import Link from "next/link"
 import { Button } from '../../components/ui/button'
 import { Skeleton } from '../../components/ui/skeleton'
-import { MoreVertical, Trash2, Eye } from "lucide-react"
+import { MoreVertical, Trash2, NotebookPen } from "lucide-react"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -128,9 +128,8 @@ function Dashboard() {
                                         <Button
                                             variant="ghost"
                                             size="icon"
-                                            className="h-8 w-8"
                                         >
-                                            <MoreVertical className="h-4 w-4" />
+                                            <MoreVertical />
                                         </Button>
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent align="end">
@@ -139,7 +138,7 @@ function Dashboard() {
                                                 href={`dashboard/forms/${form.id}`}
                                                 className="flex items-center cursor-pointer"
                                             >
-                                                <Eye className="mr-2 h-4 w-4" />
+                                                <NotebookPen />
                                                 Fill form
                                             </Link>
                                         </DropdownMenuItem>
